@@ -56,4 +56,4 @@
      - name: Install GNOME Desktop
        become: yes
        ansible.builtin.yum:
-           name: "@GNOME Desktop"
+           name: "@^GNOME Desktop"
