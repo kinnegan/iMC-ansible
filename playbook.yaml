@@ -42,4 +42,5 @@
      - name: Change 20-nproc.conf
        ansible.builtin.lineinfile:
            path: /etc/security/limits.d/20-nproc.conf
+           regexp: '^*          soft    nproc     4096'
            line: '*          soft    nproc     40960'
