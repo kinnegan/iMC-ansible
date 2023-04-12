@@ -68,7 +68,7 @@
            name: 'libstdc++'
            state: latest
 
-     - name: Install libratyes
+     - name: Install i686 libs
        ansible.builtin.yum:
            name: "{{ packages }}"
        vars:
@@ -90,3 +90,10 @@
            name: firewalld
            state: stopped
            enabled: no
+           masked: yes
+           
+     - name: Enable MySQL
+       ansible.builtin.systemd:
+             state: started
+             name: mysqld
+             enabled: yes
