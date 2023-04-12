@@ -57,3 +57,8 @@
        become: yes
        ansible.builtin.yum:
            name: "@^GNOME Desktop"
+     - name: Set default target
+       systemd:
+           name: default.target
+           state: link
+           symlink: /usr/lib/systemd/system/graphical.target
