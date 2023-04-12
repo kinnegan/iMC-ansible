@@ -63,6 +63,22 @@
        ansible.builtin.yum:
            name: "@Compatibility Libraries"
 
+     - name: Upgrade libstdc++ packages
+       ansible.builtin.yum:
+           name: 'libstdc++'
+           state: latest
+
+     - name: Install libratyes
+       ansible.builtin.yum:
+           name: "{{ packages }}"
+       vars:
+           packages:
+             - libgcc*i686
+             - libstdc++*i686
+             - glibc*i686
+             - libgfortran*i686
+             - libaio*i686
+
      - name: Change default target to graphical.target
        ansible.builtin.file:
            src: /usr/lib/systemd/system/graphical.target
