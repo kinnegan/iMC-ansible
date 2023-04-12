@@ -40,7 +40,6 @@
            line: '*               hard    nofile            65535'
            create: yes
      - name: Change 20-nproc.conf
-       ansible.builtin.replace:
+       ansible.builtin.lineinfile:
            path: /etc/security/limits.d/20-nproc.conf
-           regexp: '^4096'
-           replace: '40960'
+           line: '*          soft    nproc     40960'
