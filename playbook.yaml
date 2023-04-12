@@ -30,10 +30,10 @@
            path: /etc/security/limits.conf
            search_string: '# End of file'
            insertbefore: "*               soft    nofile            65535"
-           create: yes
+#           create: yes
      - name: Add a line to a file if the file does not exist, without passing regexp
        ansible.builtin.lineinfile:
            path: /etc/security/limits.conf
            search_string: '# End of file'
            insertbefore: "*               hard    nofile            65535"
-           create: yes
+#           create: yes
