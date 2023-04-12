@@ -43,4 +43,4 @@
        ansible.builtin.replace:
            path: /etc/security/limits.d/20-nproc.conf
            regexp: '^4096'
-           line: '40960'
+           replace: '40960'
