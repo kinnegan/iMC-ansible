@@ -1,0 +1,39 @@
+- hosts: 172.16.25.19
+  become: true
+  vars:
+    created_username: rchubugin
+
+  tasks:
+     - name: system update
+       become: yes
+       ansible.builtin.yum:
+         name: '*'
+         state: latest
+
+     - name: Install MYSQL from remote source #original path https://dev.mysql.com/get/mysql80-community-release-el7-7.noarch.rpm but it was moved. new location could be found in wget output
+       become: yes
+       ansible.builtin.yum:
+         name: https://repo.mysql.com//mysql80-community-release-el7-7.noarch.rpm
+         state: present
+
+     - name: Install MySQL server
+       become: yes
+       ansible.builtin.yum:
+           name: mysql-server
+     - name: Ensure SELinux disable
+       ansible.builtin.lineinfile:
+         path: /etc/selinux/config
+         regexp: '^SELINUX='
+         line: SELINUX=disabled
+     - name: Add a line to a file if the file does not exist, without passing regexp
+       ansible.builtin.lineinfile:
+           path: /etc/security/limits.conf
+           search_string: '# End of file'
+           insertbefore: "*               soft    nofile            65535"
+           create: yes
+     - name: Add a line to a file if the file does not exist, without passing regexp
+       ansible.builtin.lineinfile:
+           path: /etc/security/limits.conf
+           search_string: '# End of file'
+           insertbefore: "*               hard    nofile            65535"
+           create: yes
