@@ -59,7 +59,12 @@
            name: "@^GNOME Desktop"
 
      - name: Change default target to graphical.target
-       file:
+       ansible.builtin.file:
            src: /usr/lib/systemd/system/graphical.target
            dest: /etc/systemd/system/default.target
            state: link
+     - name: Disable firewall
+       ansible.builtin.service:
+           name: firewalld
+           state: stopped
+           enabled: no
