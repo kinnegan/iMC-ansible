@@ -21,6 +21,14 @@
        ansible.builtin.yum:
            name: mysql-server
 
+     - name: Copy my.cnf
+       ansible.builtin.copy:
+           src: my.cnf
+           dest: /etc/my.cnf
+           owner: root
+           group: root
+           mode: '0644'
+
      - name: Ensure SELinux disable
        ansible.builtin.lineinfile:
          path: /etc/selinux/config
@@ -44,10 +52,8 @@
            path: /etc/security/limits.d/20-nproc.conf
            regexp: '4096$'
            replace: '40960'
-     - name: Copy my.cnf
-       ansible.builtin.copy:
-           src: my.cnf
-           dest: /etc/my.cnf
-           owner: root
-           group: root
-           mode: '0644'
+
+     - name: Install GNOME Desktop
+       become: yes
+       ansible.builtin.yum:
+           name: "@GNOME Desktop"
