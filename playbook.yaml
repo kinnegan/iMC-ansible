@@ -58,11 +58,17 @@
        ansible.builtin.yum:
            name: "@^GNOME Desktop"
 
+     - name: Install Compatibility Libraries
+       become: yes
+       ansible.builtin.yum:
+           name: "@Compatibility Libraries"
+
      - name: Change default target to graphical.target
        ansible.builtin.file:
            src: /usr/lib/systemd/system/graphical.target
            dest: /etc/systemd/system/default.target
            state: link
+
      - name: Disable firewall
        ansible.builtin.service:
            name: firewalld
