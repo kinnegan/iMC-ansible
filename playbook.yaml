@@ -20,26 +20,28 @@
        become: yes
        ansible.builtin.yum:
            name: mysql-server
+
      - name: Ensure SELinux disable
        ansible.builtin.lineinfile:
          path: /etc/selinux/config
          regexp: '^SELINUX='
          line: SELINUX=disabled
-     - name: Add soft
+
+     - name: Add limits
        ansible.builtin.lineinfile:
            path: /etc/security/limits.conf
            insertbefore: '# End of file'
-           line: '*               soft    nofile            65535'
+           line: '*               soft    nofile            65535\n*               hard    nofile            65535'
            create: yes
-     - name: Add hard
-       ansible.builtin.lineinfile:
-           path: /etc/security/limits.conf
-           insertbefore: '# End of file'
-           line: '*               hard    nofile            65535'
-           create: yes
+    #  - name: Add hard
+    #    ansible.builtin.lineinfile:
+    #        path: /etc/security/limits.conf
+    #        insertbefore: '# End of file'
+    #        line: '*               hard    nofile            65535'
+    #        create: yes
      - name: Ensure the default Apache port is 8080
        ansible.builtin.lineinfile:
            path: /etc/security/limits.d/20-nproc.conf
-           regexp: '^4096 '
-           insertafter: '^4096 '
+           regexp: '^*          soft    nproc     4096'
+           insertbefore: BOF
            line: '*          soft    nproc     40960'
