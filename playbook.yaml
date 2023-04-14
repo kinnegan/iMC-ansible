@@ -35,18 +35,20 @@
          regexp: '^SELINUX='
          line: SELINUX=disabled
 
-     - name: Add limits
+     - name: Add limits soft
        ansible.builtin.lineinfile:
            path: /etc/security/limits.conf
            insertbefore: '# End of file'
            line: '*               soft    nofile            65535'
            create: yes
-     - name: Add hard
+
+     - name: Add limits hard
        ansible.builtin.lineinfile:
            path: /etc/security/limits.conf
            insertbefore: '# End of file'
            line: '*               hard    nofile            65535'
            create: yes
+           
      - name: Change 20-nproc.conf
        ansible.builtin.replace:
            path: /etc/security/limits.d/20-nproc.conf
@@ -91,7 +93,7 @@
            state: stopped
            enabled: no
            masked: yes
-           
+
      - name: Enable MySQL
        ansible.builtin.systemd:
              state: started
